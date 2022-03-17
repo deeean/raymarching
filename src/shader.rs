@@ -1,6 +1,6 @@
 use crate::{Light, Vector3f};
 
-pub type Shader = Box<dyn Fn(&Light, Vector3f, Vector3f) -> Vector3f>;
+pub type Shader = Box<dyn Fn(&Light, Vector3f, Vector3f) -> Vector3f + Send + 'static>;
 
 pub fn new_shader(color: Vector3f, diffuse_factor: f32, ambient_factor: f32) -> Shader {
   Box::new(move |light, normal, position| {
