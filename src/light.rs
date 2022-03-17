@@ -1,6 +1,6 @@
 use crate::Vector3f;
 
-#[derive(Clone)]
+#[derive(Copy, Clone)]
 pub struct Light {
   pub position: Vector3f,
   pub intensity: f32,

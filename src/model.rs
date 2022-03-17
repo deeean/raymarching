@@ -1,6 +1,6 @@
 use crate::{Light, Shader, Vector3f};
 
-type Sdf = Box<dyn Fn(Vector3f) -> f32>;
+type Sdf = Box<dyn Fn(Vector3f) -> f32 + Send + 'static>;
 
 pub struct Model {
   sdf: Sdf,
