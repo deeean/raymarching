@@ -1,4 +1,4 @@
-use std::time::Instant;
+use std::time::{Duration, Instant};
 use cgmath::{InnerSpace, VectorSpace};
 use cgmath::num_traits::clamp;
 use image::{ImageBuffer};
@@ -132,8 +132,7 @@ fn main() {
     }
   }
 
-  let tasks = rx.iter().take((WIDTH / side * HEIGHT / side) as usize);
-
+  let tasks = rx.iter().take((WIDTH / side * HEIGHT / side) as usize).collect::<Vec<_>>();
   println!("Calc {:?}", calc.elapsed());
 
   let write = Instant::now();
