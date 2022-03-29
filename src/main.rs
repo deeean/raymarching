@@ -105,7 +105,7 @@ fn get_pixel_color(uv: &Vector2f) -> Vector3f {
 }
 
 fn main() {
-  let now = Instant::now();
+  let calc = Instant::now();
   let workers = 10;
   let side = 32;
 
@@ -132,11 +132,14 @@ fn main() {
     }
   }
 
-  let tasks = (WIDTH / side * HEIGHT / side) as usize;
+  let tasks = rx.iter().take((WIDTH / side * HEIGHT / side) as usize);
 
+  println!("Calc {:?}", calc.elapsed());
+
+  let write = Instant::now();
   let mut image = ImageBuffer::new(WIDTH, HEIGHT);
 
-  for pixels in rx.iter().take(tasks) {
+  for pixels in tasks {
     for (x, y, c) in pixels {
       image.put_pixel(x, y, c);
     }
@@ -144,5 +147,5 @@ fn main() {
 
   image.save("output.png").unwrap();
 
-  println!("{:?}", now.elapsed());
+  println!("Write {:?}", write.elapsed());
 }
